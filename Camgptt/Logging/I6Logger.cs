@@ -1,6 +1,11 @@
 ﻿
 namespace Camgptt.Logging
 {
+    /// <summary>
+    /// This interface defines the methods that a logger must be able to handle, regardless as to whether the underlying class 
+    /// is a full logger or just a logger component
+    /// It also gives the option of logging exceptions with the optional abilility to override the Exception message
+    /// </summary>
     public interface I6Logger : IDisposable
     {
         public void Debug(string message);

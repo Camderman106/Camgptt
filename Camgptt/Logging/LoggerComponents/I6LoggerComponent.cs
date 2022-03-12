@@ -7,7 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Camgptt.Logging
-{
+{/// <summary>
+/// This interface exists to allow a Logger to contain other loggers as components, 
+/// to allow to NameOfCallingClass to be passed through from the underlying class,
+/// to allow exceptions to be directly logged with the optiion of overriding the exception "Message"
+/// the methods are seperated so they can be used as Logger.Info(""); etc which is readable
+/// </summary>
     internal interface I6LoggerComponent : IDisposable
     {
         internal void Info(string nameOfCallingClass, string message);
@@ -26,7 +31,7 @@ namespace Camgptt.Logging
 
         public static string NameOfCallingClass()
         {
-            string fullName;
+            string Name;
             Type declaringType;
             int skipFrames = 2;
             do
@@ -38,11 +43,11 @@ namespace Camgptt.Logging
                     return method.Name;
                 }
                 skipFrames++;
-                fullName = declaringType.FullName;
+                Name = declaringType.Name;
             }
             while (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase));
 
-            return fullName;
+            return Name;
         }
     }
 }

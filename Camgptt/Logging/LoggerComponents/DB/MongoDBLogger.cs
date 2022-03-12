@@ -4,7 +4,7 @@ using MongoDB.Driver;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Camgptt.Logging;
+namespace Camgptt.Logging.LoggingComponents.DB;
 
 internal class MongoDBLogger : I6Logger , I6LoggerComponent
 {
@@ -12,16 +12,18 @@ internal class MongoDBLogger : I6Logger , I6LoggerComponent
     private IMongoDatabase _database;
     private IMongoCollection<MongoLogRecord> _collection;
     private string _databaseName = "camgptt";
+    private string _collectionName = "logs";
+    private string defaultConnectionString = "mongodb://localhost:27017";
     private bool _connected = false;
 
-    public MongoDBLogger(string connectionString)
+    public MongoDBLogger(string? connectionString)
     {
-        _client = new MongoClient(connectionString);
+        _client = new MongoClient(connectionString?? defaultConnectionString);
         _database = _client.GetDatabase(_databaseName);
         if (_database.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000)) 
         { 
             _connected = true; 
-            _collection = _database.GetCollection<MongoLogRecord>(_databaseName);
+            _collection = _database.GetCollection<MongoLogRecord>(_collectionName);
         }
         else
         {
@@ -161,6 +163,8 @@ internal class MongoDBLogger : I6Logger , I6LoggerComponent
     private bool disposedValue;
     protected virtual void Dispose(bool disposing)
     {
+        //Managed resources are those that are pure .NET code and managed by the runtime and are under its direct control.
+        //Unmanaged resources are those that are not. File handles, pinned memory, COM objects, database connections etc.
         if (!disposedValue)
         {
             if (disposing)
