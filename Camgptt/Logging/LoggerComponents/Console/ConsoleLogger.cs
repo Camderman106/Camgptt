@@ -41,7 +41,7 @@ namespace Camgptt.Logging.LoggerComponents.ConsoleComponents
             {
                 ProgressBars.Remove(bar);
                 //This handles clearing and rewriting the progress bars
-                WriteLine($"[{DateTime.Now}]{bar.Caller}|{bar.Message}|Finished: {String.Format("{0:P}", bar.CurrentTick / bar.TotalTicks)} - {bar.Duration.ElapsedMilliseconds / 1000}s");
+                WriteLine($"[{DateTime.Now}]{bar.Caller}|{bar.Message}|Finished: {String.Format("{0:P}",(float) bar.CurrentTick / bar.TotalTicks)} - {bar.Duration.ElapsedMilliseconds / 1000}s");
             }
         }
 
@@ -85,7 +85,7 @@ namespace Camgptt.Logging.LoggerComponents.ConsoleComponents
                 //return to start of the line
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top);
                 //Generate and write the progress bar
-                string DisplayString = $"----|{bar.Caller}|{bar.Message}|{String.Format("{0:P}", bar.CurrentTick / bar.TotalTicks)} - {bar.Duration.ElapsedMilliseconds / 1000}s";
+                string DisplayString = $"----|{bar.Caller}|{bar.Message}|{String.Format("{0:P}", (float) bar.CurrentTick / bar.TotalTicks)} - {bar.Duration.ElapsedMilliseconds / 1000}s";
                 if (DisplayString.Length> Console.BufferWidth) DisplayString = DisplayString.Substring(0, Console.BufferWidth);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(DisplayString);

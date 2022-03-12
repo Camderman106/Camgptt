@@ -27,12 +27,18 @@ namespace TestProject
                     Thread.Sleep(10);
                     using (var ibar = Log.AddProgressBar("Loop 1", 100))
                     {
+                        for (int j = 0; j < 50; j++)
+                        {
+                            //Log.Info(j.ToString());
+                            Thread.Sleep(1);
+                            ibar.Tick();
+                        }
                         using (var iibar = Log.AddProgressBar("Loop 2", 100))
                         {
 
-                            for (int j = 0; j < 100; j++)
+                            for (int j = 0; j < 50; j++)
                             {
-                                //Log.Info(j.ToString());
+                                //Log.Info("Log Message Test");
                                 Thread.Sleep(1);
                                 iibar.Tick();
                             }
